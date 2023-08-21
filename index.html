@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>CRUD MVC</title>
+</head>
+
+<body>
+	<center > <h1> Crud </h1></h1></center>
+	<center style="margin-top: 70px;">
+		<label>Name :<input type="text" id="name"></label><br>
+		<br> <label>enum :<input type="text" id="enum"></label><br>
+		<br> <label>sal :<input type="text" id="sal"></label><br>
+		<br> <label>job :<input type="text" id="job"></label><br>
+		<br> <label>dept :<input type="text" id="dept"></label><br>
+		<br>
+
+		<button id="first" onclick="First()" style="margin-right: 10px;">First</button>
+		<button id="last" onclick="Last()" style="margin-right: 10px;">Last</button>
+		<button id="next" onclick="Next()" style="margin-right: 10px;">Next</button>
+		<button id="Prev" onclick="Prev()" style="margin-right: 10px;">Previous</button>
+		<button id="Add" onclick="Add()" style="margin-right: 10px;">Add</button>
+		<button id="Del" onclick="Del()" style="margin-right: 10px;">Delete</button>
+		<button id="Edit" onclick="Edit()" style="margin-right: 10px;">Edit</button>
+		<button id="Reset" onclick="Reset()" style="margin-right: 10px;">Reset</button>
+	</center>
+	<script>
+		var pos=0;
+		function First(){
+			var xhr=new XMLHttpRequest();
+			xhr.open('GET',"CrudServlet?button=First",true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+					
+					document.getElementById("name").value=data.name;
+					document.getElementById("enum").value=data.eno;
+					document.getElementById("sal").value=data.sal;
+					document.getElementById("job").value=data.job;
+					document.getElementById("dept").value=data.dept;
+				}
+			};
+			xhr.send();
+		}
+		function Reset(){
+					
+					document.getElementById("name").value="";
+					document.getElementById("enum").value="";
+					document.getElementById("sal").value="";
+					document.getElementById("job").value="";
+					document.getElementById("dept").value="";
+				}
+			
+		
+		function Last(){
+			var xhr=new XMLHttpRequest();
+			xhr.open('GET',"CrudServlet?button=Last",true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+					document.getElementById("name").value=data.name;
+					document.getElementById("enum").value=data.eno;
+					document.getElementById("sal").value=data.sal;
+					document.getElementById("job").value=data.job;
+					document.getElementById("dept").value=data.dept;
+				}
+			};
+			xhr.send();
+		}
+		function Next(){
+			pos+=1;
+			var xhr=new XMLHttpRequest();
+			xhr.open('GET',"CrudServlet?button=Next&pos="+pos,true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+					document.getElementById("name").value=data.name;
+					document.getElementById("enum").value=data.eno;
+					document.getElementById("sal").value=data.sal;
+					document.getElementById("job").value=data.job;
+					document.getElementById("dept").value=data.dept;
+				}
+			};
+			xhr.send();
+		}
+		function Edit(){
+			var xhr = new XMLHttpRequest();
+			var s1=document.getElementById("name").value;
+			var s2=document.getElementById("enum").value;
+			var s3=document.getElementById("sal").value;
+			var s4=document.getElementById("job").value;
+			var s5=document.getElementById("dept").value;
+			xhr.open('GET',"CrudServlet?button=Edit&s1="+s1+"&s2="+s2+"&s3="+s3+"&s4="+s4+"&s5="+s5,true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+				}
+			};
+			xhr.send();
+		}
+		
+		function Prev(){
+			pos-=1;
+			var xhr=new XMLHttpRequest();
+			xhr.open('GET',"CrudServlet?button=Prev&pos="+pos,true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+					document.getElementById("name").value=data.name;
+					document.getElementById("enum").value=data.eno;
+					document.getElementById("sal").value=data.sal;
+					document.getElementById("job").value=data.job;
+					document.getElementById("dept").value=data.dept;
+				}
+			};
+			xhr.send();
+		}
+		function Add(){
+			pos-=1;
+			var xhr=new XMLHttpRequest();
+			var s1=document.getElementById("name").value;
+			var s2=document.getElementById("enum").value;
+			var s3=document.getElementById("sal").value;
+			var s4=document.getElementById("job").value;
+			var s5=document.getElementById("dept").value;
+			xhr.open('GET',"CrudServlet?button=Add&s1="+s1+"&s2="+s2+"&s3="+s3+"&s4="+s4+"&s5="+s5,true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+				}
+			};
+			xhr.send();
+		}
+		function Del(){
+			var xhr=new XMLHttpRequest();
+			var eno=document.getElementById("enum").value;
+			xhr.open('GET',"CrudServlet?button=Delete&eno="+eno,true);
+			xhr.onreadystatechange=function(){
+				if(xhr.status===200 && xhr.readyState===4){
+					var data=JSON.parse(xhr.responseText);
+					document.getElementById("name").value=null;
+					document.getElementById("enum").value=null;
+					document.getElementById("sal").value=null;
+					document.getElementById("job").value=null;
+					document.getElementById("dept").value=null;
+				}
+			};
+			xhr.send();
+		}
+	</script>
+</body>
+
+</html>
